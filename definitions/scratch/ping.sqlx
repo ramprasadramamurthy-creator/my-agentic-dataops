@@ -1,0 +1,2 @@
+config { type: "view", schema: "silver", name: "ping_test" }
+select 1 as ok

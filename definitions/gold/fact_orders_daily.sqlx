@@ -1,0 +1,35 @@
+config {
+    type: "table",
+    database: "my-agentic-dataops",
+    schema: "gold",
+    name: "fact_orders_daily",
+    tags: ["daily", "gold"]
+}
+
+WITH
+  valid_orders AS (
+  SELECT
+    *
+  FROM
+    ${ref("silver", "orders_clean")}
+  WHERE
+    status IN ("completed",
+      "returned") )
+SELECT
+  DATE(order_ts) AS order_date,
+  COUNTIF(status = "completed") AS orders_completed,
+  COUNTIF(status = "returned") AS orders_returned,
+  SUM(CASE
+      WHEN status="completed" THEN amount
+      ELSE 0
+  END
+    ) AS revenue,
+  SUM(CASE
+      WHEN status="returned" THEN amount
+      ELSE 0
+  END
+    ) AS returns_amount
+FROM
+  valid_orders
+GROUP BY
+  1

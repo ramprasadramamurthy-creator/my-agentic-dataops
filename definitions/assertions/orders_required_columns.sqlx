@@ -1,0 +1,14 @@
+config {
+    type: "assertion",
+    name: "orders_required_columns",
+    tags: ["dq"]
+}
+
+SELECT
+  *
+FROM
+  ${ref("silver", "orders_clean")}
+WHERE
+  order_id IS NULL
+  OR customer_id IS NULL
+  OR order_ts IS NULL

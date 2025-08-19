@@ -1,0 +1,5 @@
+defaultProject: my-agentic-dataops
+defaultLocation: asia-south1
+defaultDataset: bronze
+defaultAssertionDataset: dataform_assertions
+dataformCoreVersion: 3.0.0

@@ -1,0 +1,13 @@
+config {
+    type: "assertion",
+    name: "orders_no_negative_amounts",
+    tags: ["dq", "critical"]
+}
+
+SELECT
+  *
+FROM
+  ${ref("silver", "orders_clean")}
+WHERE
+  amount < 0
+  AND status != "returned"

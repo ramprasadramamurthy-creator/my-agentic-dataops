@@ -1,0 +1,16 @@
+config {
+  type: "table",
+  database: "my-agentic-dataops",
+  schema: "silver",
+  name: "customers_clean",
+  tags: ["daily","silver"]
+}
+
+SELECT
+  CAST(customer_id AS STRING) AS customer_id,
+  INITCAP(first_name)         AS first_name,
+  INITCAP(last_name)          AS last_name,
+  SAFE.TRIM(email)            AS email,
+  UPPER(country)              AS country,
+  DATE(signup_date)           AS signup_date
+FROM `my-agentic-dataops.bronze.customers_raw`
